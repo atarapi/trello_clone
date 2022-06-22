@@ -4,11 +4,11 @@ Trello クローンアプリ
 
 ## 簡単な説明
 
-React を使って Trello（https://trello.com/ja）の簡単なクローンアプリケーションを作りました。
+React を使って[Trello](https://trello.com/)の簡単なクローンアプリケーションを作りました。
 
 **_デモ_**
 
-![デモ](https://trello-clone-sepia.vercel.app/)
+[デモ](https://trello-clone-sepia.vercel.app/)
 
 ## 作者
 
