@@ -1,21 +1,47 @@
 import React, {useState} from 'react';
-import { Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { AddTaskCardButton } from './button/AddTaskCardButton';
 import { TaskCard } from './TaskCard';
 
 export default function TaskCards() {
   const [taskCardsList, setTaskCardsList] = useState([{
-    id: 0,
+    id: "0",
     draggableId: 0,
   }]);
+  
+  const reorder = (taskCardsList, startIndex, endIndex) => {
+    const remove = taskCardsList.splice(startIndex,1);
+    taskCardsList.splice(endIndex,0,remove[0]);
+  };
+  
+  const handleDragEnd = (result) =>{
+    reorder(taskCardsList, result.source.index, result.destination.index);
+    setTaskCardsList(taskCardsList);
+  };
+
   return (
-    <div className='taskCardsArea'>
-       {taskCardsList.map((taskCardList) => (
-        <TaskCard key={taskCardList.id}/>
-       ))}
-        <AddTaskCardButton 
-        taskCardsList={taskCardsList}
-        setTaskCardsList={setTaskCardsList}/>
-    </div>
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <Droppable droppableId='droppable' direction='horizontal'>
+        {(provided) => (
+              <div className='taskCardsArea' 
+              {...provided.droppableProps}
+              ref={provided.innerRef}>
+              {taskCardsList.map((taskCard, index) => (
+               <TaskCard 
+               index={index}
+               key={taskCard.id}
+               taskCardsList={taskCardsList}
+               setTaskCardsList={setTaskCardsList}
+               taskCard={taskCard}
+               />
+              ))}
+              {provided.placeholder}
+               <AddTaskCardButton 
+               taskCardsList={taskCardsList}
+               setTaskCardsList={setTaskCardsList}/>
+           </div>
+        )}
+    </Droppable>
+    </DragDropContext>
   )
 }
