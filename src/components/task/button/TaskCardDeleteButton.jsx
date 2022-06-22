@@ -1,12 +1,16 @@
 import React from 'react'
 
-export const TaskCardDeleteButton = () => {
-  const  taskCardDeleteButton = () =>{
-    
-  }
+export const TaskCardDeleteButton = ({
+  taskCardsList, 
+  setTaskCardsList, 
+  taskCard,
+}) => {
+  const taskCardDeleteButton = (id) =>{
+    setTaskCardsList(taskCardsList.filter((e) => e.id !==id));
+  };
   return (
     <div>
-      <button className='taskCardDeleteButton' onClick={() => taskCardDeleteButton()}><i className="fa-solid fa-xmark"></i></button>
+      <button className='taskCardDeleteButton' onClick={() => taskCardDeleteButton(taskCard.id)}><i className="fa-solid fa-xmark"></i></button>
     </div>
   )
 }
